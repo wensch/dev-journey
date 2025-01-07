@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types", "./types"]
+
+  },
+  "include": [
+    "src/**/*.ts", // Certifique-se de que está incluindo todos os arquivos .ts, incluindo o custom.d.ts
+    "src/types/custom.d.ts"
+  ]
+}
