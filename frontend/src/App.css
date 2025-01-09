@@ -9,3 +9,9 @@
 .lastTime {
   border: 1px solid tomato;
 }
+
+.task-list-container {
+  max-height: 70vh; /* Limita a altura para caber na tela */
+  overflow-y: auto; /* Adiciona rolagem somente no eixo Y */
+  margin-top: 1rem; /* Ajuste de espaço */
+}

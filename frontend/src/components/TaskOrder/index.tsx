@@ -8,7 +8,7 @@ const TaskOrder = ({
       <select
         name="order"
         onChange={(e) => handleOrderChange(e.target.value)}
-        className="border p-2 rounded"
+        className="border p-2 rounded bg-dark text-white focus:outline-none focus:ring-2 focus:ring-highlight"
         defaultValue={'DEFAULT'}
       >
         <option value="DEFAULT" disabled>

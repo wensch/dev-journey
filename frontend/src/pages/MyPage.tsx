@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const {userPeople} = useAuth();
+  const {userPeople, saveLogout} = useAuth();
   
   return (
     <>
@@ -12,6 +12,7 @@ const MyPage = () => {
       <button onClick={() => {
         localStorage.removeItem('Naruto')
         navigate("/");
+        saveLogout();
       }}>Sair </button>
     </>
   )

@@ -14,14 +14,14 @@ const TaskForm = ({
   return (
     <form
       onSubmit={handleAddTask}
-      className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 bg-gray-800 p-6 rounded-lg shadow-md"
+      className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 bg-primary p-6 rounded-lg shadow-md"
     >
       <input
         type="text"
         value={currentTaskText}
         onChange={(e) => setCurrentTaskText(e.target.value)}
         required
-        className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-3 border border-secondary rounded-lg bg-dark focus:outline-none focus:ring-2 focus:ring-highlight"
         placeholder="Digite a tarefa"
       />
       <input
@@ -29,15 +29,15 @@ const TaskForm = ({
         value={currentTaskDate}
         onChange={(e) => setCurrentTaskDate(e.target.value)}
         required
-        className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-3 border border-secondary rounded-lg bg-dark focus:outline-none focus:ring-2 focus:ring-highlight"
       />
       <button
         type="submit"
-        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
-      >
-        Adicionar ➕
+        className="bg-accent text-primaryDark rounded-lg px-4 py-2 font-medium hover:bg-accent-hover">
+        Adicionar
       </button>
     </form>
+
   );
 };
 

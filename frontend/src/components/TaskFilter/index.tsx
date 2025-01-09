@@ -13,43 +13,24 @@ const TaskFilter = ({
         type="text"
         onChange={(e) => handleSearch(e.target.value.toLowerCase())}
         placeholder="Buscar tarefas..."
-        className="border p-2 rounded"
+        className="border p-2 rounded bg-dark text-white focus:outline-none focus:ring-2 focus:ring-highlight"
       />
       <div className="flex gap-2 mt-4">
-        <button
-          onClick={() => handleFilter("all")}
-          className={`py-2 px-4 rounded border ${
-            activeFilter === "all" ? "bg-blue-500 text-white border-blue-500" : "bg-gray-100 border-gray-300"
-          }`}
-        >
-          Todas
-        </button>
-        <button
-          onClick={() => handleFilter("overdue")}
-          className={`py-2 px-4 rounded ${
-            activeFilter === "overdue" ? "bg-blue-500 text-white" : ""
-          }`}
-        >
-          Vencidas
-        </button>
-        <button
-          onClick={() => handleFilter("today")}
-          className={`py-2 px-4 rounded ${
-            activeFilter === "today" ? "bg-blue-500 text-white" : ""
-          }`}
-        >
-          Hoje
-        </button>
-        <button
-          onClick={() => handleFilter("future")}
-          className={`py-2 px-4 rounded ${
-            activeFilter === "future" ? "bg-blue-500 text-white" : ""
-          }`}
-        >
-          Futuras
-        </button>
+        {['all', 'overdue', 'today', 'future'].map((filter) => (
+          <button
+            key={filter}
+            onClick={() => handleFilter(filter)}
+            className={`py-2 px-4 rounded border ${activeFilter === filter
+                ? 'bg-accent text-white border-highlight'
+                : 'bg-dark border-secondary'
+              }`}
+          >
+            {filter === 'all' ? 'Todas' : filter.charAt(0).toUpperCase() + filter.slice(1)}
+          </button>
+        ))}
       </div>
     </div>
+
   );
 };
 

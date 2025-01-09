@@ -29,32 +29,29 @@ const TaskItem = ({
     return d.toDateString() === today
       ? `Hoje, às ${d.getHours()}h${d.getMinutes()}`
       : d.toLocaleDateString("pt-BR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
   };
 
   return (
     <li
-      className={`p-6 bg-gray-800 rounded-lg shadow-md ${
-        new Date(task.date).valueOf() < Date.now()
-          ? "border-red-500 border"
-          : "border-gray-600"
-      }`}
+      className={`p-6 bg-primary rounded-lg shadow-md ${new Date(task.date).valueOf() < Date.now() ? 'border-accent border' : 'border-secondary'
+        }`}
     >
       {isEditing ? (
         <form
           onSubmit={(e) => {
             e.preventDefault();
             if (!editText.trim()) {
-              alert("O texto da tarefa não pode ser vazio.");
+              alert('O texto da tarefa não pode ser vazio.');
               return;
             }
             if (new Date(editDate) < new Date()) {
-              alert("A data não pode ser no passado.");
+              alert('A data não pode ser no passado.');
               return;
             }
             saveEdit(editText, editDate, indice);
@@ -64,17 +61,17 @@ const TaskItem = ({
             type="text"
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="w-full mb-3 p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full mb-3 p-3 border border-secondary rounded-lg bg-dark text-white focus:outline-none focus:ring-2 focus:ring-highlight"
           />
           <input
             type="datetime-local"
             value={editDate}
             onChange={(e) => setEditDate(e.target.value)}
-            className="w-full mb-3 p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full mb-3 p-3 border border-secondary rounded-lg bg-dark text-white focus:outline-none focus:ring-2 focus:ring-highlight"
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition duration-300"
+            className="w-full bg-highlight hover:bg-accent text-dark font-bold py-3 rounded-lg transition duration-300"
           >
             Salvar
           </button>
@@ -82,21 +79,22 @@ const TaskItem = ({
       ) : (
         <>
           <span
-            className="block text-lg font-bold mb-4 hover:underline cursor-pointer"
+            className="block text-lg font-bold mb-4 text-highlight hover:underline cursor-pointer text-secondary"
             onClick={() => startEditing(indice)}
           >
             {task.text}
           </span>
-          <span className="block mb-4 text-sm text-gray-400">{formatDate(task.date)}</span>
+          <span className="block mb-4 text-sm text-secondary">{formatDate(task.date)}</span>
           <button
             onClick={() => removeTask(indice)}
-            className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-bold transition duration-300"
+            className="bg-accent hover:bg-highlight text-dark py-2 px-4 rounded-lg font-bold transition duration-300"
           >
-            ✖️ Remover
+            Remover
           </button>
         </>
       )}
     </li>
+
   );
 };
 
