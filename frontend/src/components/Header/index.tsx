@@ -38,12 +38,6 @@ const Header = () => {
         >
           Login
         </Link>
-        <Link
-          to="/settings"
-          className={`text-base ${location.pathname === "/settings" ? "font-bold underline" : "text-white"}`}
-        >
-          Settings
-        </Link>
       </nav>
     </header>
   );
