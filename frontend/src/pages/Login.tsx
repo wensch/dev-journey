@@ -1,6 +1,7 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface IUser {
   email: string;
@@ -14,22 +15,20 @@ const Login = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { saveLogin } = useAuth();
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     if (localStorage.getItem('Naruto')) {
-      navigate('/my-page')
+      navigate('/my-page');
     }
-    return
-  }, [])
-  
+  }, [navigate]);
 
-  const onSubmit: SubmitHandler<IUser> = (data) => {
+  const onSubmit = (data: IUser) => {
     setIsLoading(true);
-    login(data);
+    handleLogin(data);
   };
 
-  const login = (user: IUser) => {
+  const handleLogin = (user: IUser) => {
     fetch('http://localhost:5001/users/login', {
       method: 'POST',
       headers: {
@@ -46,10 +45,12 @@ const Login = () => {
       .then(data => {
         setIsLoading(false);
         saveToken(data.token);
+        saveLogin(data);
         navigate("/my-page");
       })
       .catch(error => {
         console.error('Erro ao logar:', error);
+        alert('Erro ao realizar o login. Tente novamente.');
         setIsLoading(false);
       });
   };
@@ -73,7 +74,7 @@ const Login = () => {
               {...register("email", {
                 required: 'O e-mail é obrigatório',
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
                   message: 'Por favor insira um e-mail válido',
                 },
               })}
@@ -96,14 +97,18 @@ const Login = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            <button className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:shadow-outline" type="submit">
-              Logar
+            <button 
+              className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:shadow-outline" 
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Aguarde...' : 'Logar'}
             </button>
           </div>
         </form>
       </section>
       {isLoading && (
-        <div className="absolute bg-black h-full w-full opacity-90 flex items-center justify-center flex-col text-white text-2xl">
+        <div className="fixed inset-0 bg-black opacity-90 flex items-center justify-center flex-col text-white text-2xl" aria-live="polite">
           <div className="mb-4">Logando...</div>
           <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-white"></div>
         </div>
