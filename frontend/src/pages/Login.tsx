@@ -60,14 +60,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center ">
-      <section className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Login</h2>
+    <div className="flex items-center justify-center mt-[40px] bg-primary">
+      <section className="bg-secondary p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-primaryDark">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="email">E-mail</label>
+            <label className="block text-primaryDark font-bold mb-2" htmlFor="email">E-mail</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent-light rounded w-full py-2 px-3 text-primary bg-secondary leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-accent-lightHover"
               id="email"
               type="email"
               placeholder="Seu e-mail"
@@ -79,13 +79,13 @@ const Login = () => {
                 },
               })}
             />
-            {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
+            {errors.email && <span className="text-accent text-sm">{errors.email.message}</span>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="senha">Senha</label>
+            <label className="block text-primaryDark font-bold mb-2" htmlFor="senha">Senha</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent-light rounded w-full py-2 px-3 text-primary bg-secondary leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-accent-lightHover"
               id="senha"
               type="password"
               placeholder="Sua senha"
@@ -93,12 +93,12 @@ const Login = () => {
                 required: "A senha é obrigatória.",
               })}
             />
-            {errors.senha && <span className="text-red-500 text-sm">{errors.senha.message}</span>}
+            {errors.senha && <span className="text-accent text-sm">{errors.senha.message}</span>}
           </div>
 
           <div className="flex items-center justify-center">
             <button 
-              className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:shadow-outline" 
+              className={`bg-accent hover:bg-accent-hover text-primaryDark font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-md focus:outline-none focus:shadow-outline ${isLoading && 'opacity-50 cursor-not-allowed'}`} 
               type="submit"
               disabled={isLoading}
             >
@@ -108,9 +108,9 @@ const Login = () => {
         </form>
       </section>
       {isLoading && (
-        <div className="fixed inset-0 bg-black opacity-90 flex items-center justify-center flex-col text-white text-2xl" aria-live="polite">
+        <div className="fixed inset-0 bg-primaryDark opacity-90 flex items-center justify-center flex-col text-secondary text-2xl" aria-live="polite">
           <div className="mb-4">Logando...</div>
-          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-white"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-secondary"></div>
         </div>
       )}
     </div>

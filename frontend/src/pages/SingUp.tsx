@@ -68,26 +68,26 @@ const SignUp = () => {
   );
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
-      <section className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Cadastro</h2>
+    <div className="flex items-center justify-center min-h-screen bg-primary">
+      <section className="bg-primaryDark p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-secondary">Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="nome">Nome</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="nome">Nome</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded  w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="nome"
               type="text"
               placeholder="Seu nome"
               {...register("name", { required: "O nome é obrigatório." })}
             />
-            {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+            {errors.name && <span className="text-accent-light text-sm">{errors.name.message}</span>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="email">E-mail</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="email">E-mail</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="email"
               type="email"
               placeholder="Seu e-mail"
@@ -99,54 +99,54 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
+            {errors.email && <span className="text-accent-light text-sm">{errors.email.message}</span>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="cpf">CPF</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="cpf">CPF</label>
             <InputMask
               mask="999.999.999-99"
               maskPlaceholder={null}
-              {...register("cpf", { 
+              {...register("cpf", {
                 required: "O CPF é obrigatório.",
                 validate: (value) => validarCPF(value) || 'CPF inválido'
               })}
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="cpf"
               type="text"
               placeholder="Seu CPF"
             />
-            {errors.cpf && <span className="text-red-500 text-sm">{errors.cpf.message}</span>}
+            {errors.cpf && <span className="text-accent-light text-sm">{errors.cpf.message}</span>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="telefone">Telefone</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="telefone">Telefone</label>
             <InputMask
               mask="(99) 99999-9999"
               maskPlaceholder={null}
-              {...register("telefone", { 
+              {...register("telefone", {
                 required: "O telefone é obrigatório.",
                 minLength: {
                   value: 15,
                   message: 'Por favor, insira um telefone válido.',
                 },
               })}
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="telefone"
               type="tel"
               placeholder="Seu telefone"
             />
-            {errors.telefone && <span className="text-red-500 text-sm">{errors.telefone.message}</span>}
+            {errors.telefone && <span className="text-accent-light text-sm">{errors.telefone.message}</span>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="senha">Senha</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="senha">Senha</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="senha"
               type="password"
               placeholder="Sua senha"
-              {...register("senha", { 
+              {...register("senha", {
                 required: "A senha é obrigatória.",
                 minLength: {
                   value: 8,
@@ -170,9 +170,9 @@ const SignUp = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="confirmacao-senha">Confirmação de Senha</label>
+            <label className="block text-secondary font-bold mb-2" htmlFor="confirmacao-senha">Confirmação de Senha</label>
             <input
-              className="shadow appearance-none border-b border-cyan-950 rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-cyan-950"
+              className="shadow appearance-none border-b border-accent rounded w-full py-2 px-3 text-secondary bg-primary leading-tight focus:outline-none focus:ring-2 focus:ring-accent"
               id="confirmacao-senha"
               type="password"
               placeholder="Confirme sua senha"
@@ -185,23 +185,24 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.confirmSenha && <span className="text-red-500 text-sm">{errors.confirmSenha.message}</span>}
+            {errors.confirmSenha && <span className="text-accent-light text-sm">{errors.confirmSenha.message}</span>}
           </div>
 
           <div className="flex items-center justify-center">
-            <button className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus:shadow-outline" type="submit">
+            <button className="bg-accent hover:bg-accent-hover text-primaryDark font-bold py-2 px-4 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none" type="submit">
               Cadastrar
             </button>
           </div>
         </form>
       </section>
       {isLoading && (
-        <div className="absolute bg-black h-full w-full opacity-90 flex items-center justify-center flex-col text-white text-2xl">
+        <div className="absolute bg-primaryDark h-full w-full opacity-90 flex items-center justify-center flex-col text-secondary text-2xl">
           <div className="mb-4">Cadastrando...</div>
-          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-white"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-accent"></div>
         </div>
       )}
     </div>
+
   );
 };
 

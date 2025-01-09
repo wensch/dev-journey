@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskFilter from "../components/TaskFilter";
 import TaskOrder from "../components/TaskOrder";
@@ -19,8 +19,8 @@ const Home = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [searchText, setSearchText] = useState<string>("");
   const [itemsToShow, setItemsToShow] = useState<number>(4);
-
-  const mainRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const updateTasks = (arr: ITasks[]) => {
     localStorage.setItem("Tarefas", JSON.stringify(arr));
@@ -32,7 +32,21 @@ const Home = () => {
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks));
     }
+    setIsLoaded(true);
   }, []);
+
+  useEffect(() => {
+    const handleWindowScroll = () => {  
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        loadMoreTasks();
+      }
+    };
+  
+    window.addEventListener("scroll", handleWindowScroll);
+    return () => window.removeEventListener("scroll", handleWindowScroll);
+  }, [isLoaded, tasks, itemsToShow]);
+  
 
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,16 +101,11 @@ const Home = () => {
 
   const loadMoreTasks = () => {
     if (itemsToShow < getFilteredTasks().length) {
-      setItemsToShow((prev) => prev + 4);
-    }
-  };
-
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    console.log('test scroll', e);
-    
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      loadMoreTasks();
+      setIsLoadingMore(true); // Inicia o carregamento
+      setTimeout(() => {
+        setItemsToShow((prev) => prev + 4);
+        setIsLoadingMore(false); // Finaliza o carregamento
+      }, 1000); // Simula um atraso de 1 segundo
     }
   };
 
@@ -131,58 +140,59 @@ const Home = () => {
   };
 
   return (
-    <div ref={mainRef} onScroll={handleScroll}>
-      <main
-        className=" p-4 box-border "
-        onScroll={handleScroll}
-      >
-        <Content 
-          title="Bem-vindo à Sua Todo List Personalizada 🚀"
-          subtitle=" Na página inicial do nosso sistema de gerenciamento de tarefas, você encontrará diversas funcionalidades que tornam a organização do seu dia mais simples e eficiente. Aqui está um guia completo para aproveitar ao máximo as ferramentas disponíveis:"
-          contents={[
-            {
-              title: "📋 CRUD de Tarefas",
-              text: "Com o formulário no topo da página, você pode criar, editar e remover tarefas de maneira simples. Basta inserir o nome da tarefa e a data desejada, e clicar no botão verde “Adicionar”. Para editar, clique na tarefa e altere as informações. Caso não precise mais de uma tarefa, clique em “Remover” para eliminá-la."
-            },
-            {
-              title: "🔍 Busca Rápida",
-              text: "Abaixo do formulário, você encontrará um campo de busca que permite localizar tarefas específicas. Basta começar a digitar o nome da tarefa desejada, e o sistema irá filtrar os resultados em tempo real."
-            },
-            {
-              title: "📅 Filtros de Data",
-              text: "Abaixo do formulário, vocé encontrará filtros de data, que permitirão que vocé organize suas tarefas por datas especiais, como tarefas de hoje, de amanha, ou de data futura."
-            },
-            {
-              title: "⬆️⬇️ Ordenação Personalizada",
-              text: "Na lateral, você encontrará um seletor de ordenação. Ele permite organizar suas tarefas de acordo com suas preferências, como ordem alfabética ou data. Isso facilita a priorização das tarefas de maneira visual e intuitiva."
-            }
-          ]}
-          endText=" Com todas essas funcionalidades, nossa Todo List não é apenas uma ferramenta de organização, mas um aliado poderoso para manter suas tarefas sob controle e alcançar seus objetivos com eficiência. Aproveite! 🎯"
-        />
-      
-        
-        <TaskForm
-          currentTaskText={currentTaskText}
-          setCurrentTaskText={setCurrentTaskText}
-          currentTaskDate={currentTaskDate}
-          setCurrentTaskDate={setCurrentTaskDate}
-          handleAddTask={handleAddTask}
-        />
-        <TaskFilter
-          activeFilter={activeFilter}
-          handleFilter={setActiveFilter}
-          handleSearch={setSearchText}
-        />
-        <TaskOrder handleOrderChange={orderTasks} />
-        <TaskList
-          tasks={getVisibleTasks()}
-          taskEdited={taskEdited}
-          setTaskEdited={setEditTaks}
-          saveEdit={saveEdit}
-          removeTask={removeTask}
-        />
-      </main>
-    </div>
+    <main
+      className=" p-4 box-border "
+    >
+      <Content 
+        title="Bem-vindo à Sua Todo List Personalizada 🚀"
+        subtitle=" Na página inicial do nosso sistema de gerenciamento de tarefas, você encontrará diversas funcionalidades que tornam a organização do seu dia mais simples e eficiente. Aqui está um guia completo para aproveitar ao máximo as ferramentas disponíveis:"
+        contents={[
+          {
+            title: "📋 CRUD de Tarefas",
+            text: "Com o formulário no topo da página, você pode criar, editar e remover tarefas de maneira simples. Basta inserir o nome da tarefa e a data desejada, e clicar no botão verde “Adicionar”. Para editar, clique na tarefa e altere as informações. Caso não precise mais de uma tarefa, clique em “Remover” para eliminá-la."
+          },
+          {
+            title: "🔍 Busca Rápida",
+            text: "Abaixo do formulário, você encontrará um campo de busca que permite localizar tarefas específicas. Basta começar a digitar o nome da tarefa desejada, e o sistema irá filtrar os resultados em tempo real."
+          },
+          {
+            title: "📅 Filtros de Data",
+            text: "Abaixo do formulário, vocé encontrará filtros de data, que permitirão que vocé organize suas tarefas por datas especiais, como tarefas de hoje, de amanha, ou de data futura."
+          },
+          {
+            title: "⬆️⬇️ Ordenação Personalizada",
+            text: "Na lateral, você encontrará um seletor de ordenação. Ele permite organizar suas tarefas de acordo com suas preferências, como ordem alfabética ou data. Isso facilita a priorização das tarefas de maneira visual e intuitiva."
+          }
+        ]}
+        endText=" Com todas essas funcionalidades, nossa Todo List não é apenas uma ferramenta de organização, mas um aliado poderoso para manter suas tarefas sob controle e alcançar seus objetivos com eficiência. Aproveite! 🎯"
+      />
+    
+      <TaskForm
+        currentTaskText={currentTaskText}
+        setCurrentTaskText={setCurrentTaskText}
+        currentTaskDate={currentTaskDate}
+        setCurrentTaskDate={setCurrentTaskDate}
+        handleAddTask={handleAddTask}
+      />
+      <TaskFilter
+        activeFilter={activeFilter}
+        handleFilter={setActiveFilter}
+        handleSearch={setSearchText}
+      />
+      <TaskOrder handleOrderChange={orderTasks} />
+      <TaskList
+        tasks={getVisibleTasks()}
+        taskEdited={taskEdited}
+        setTaskEdited={setEditTaks}
+        saveEdit={saveEdit}
+        removeTask={removeTask}
+      />
+      {isLoadingMore && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="w-12 h-12 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+        </div>
+      )}
+    </main>
   );
 }
 

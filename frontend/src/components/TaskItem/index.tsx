@@ -39,7 +39,7 @@ const TaskItem = ({
 
   return (
     <li
-      className={`p-6 bg-primary rounded-lg shadow-md ${new Date(task.date).valueOf() < Date.now() ? 'border-accent border' : 'border-secondary'
+      className={`p-6 bg-primary rounded-lg shadow-md border ${new Date(task.date).valueOf() < Date.now() ? 'border-accent-hover' : 'border-accent-lightHover'
         }`}
     >
       {isEditing ? (

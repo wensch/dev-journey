@@ -54,7 +54,7 @@ const CreateCharacter = () => {
       });
   };
 
-  const showNotification = (text:string) => {
+  const showNotification = (text: string) => {
     if (!("Notification" in window)) {
       alert(text);
     }
@@ -69,7 +69,7 @@ const CreateCharacter = () => {
           new Notification(text);
         }
       });
-    } else  {
+    } else {
       alert(text);
     }
   }
@@ -96,10 +96,10 @@ const CreateCharacter = () => {
           maxWidthOrHeight: 200, // Redimensiona se maior que 500px
           useWebWorker: true,
         };
-  
+
         // Compressão da imagem
         const compressedFile = await imageCompression(file, options);
-  
+
         // Converte o arquivo comprimido em Base64
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -124,59 +124,59 @@ const CreateCharacter = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-800 text-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-8 text-center">Create Your Character</h1>
+    <div className="max-w-4xl mx-auto p-6 bg-primaryDark text-secondary rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold mb-8 text-center text-secondary">Create Your Character</h1>
 
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-2">
+          <label htmlFor="name" className="block text-sm font-medium mb-2 text-secondary">
             Nome do Personagem
           </label>
           <input
             type="text"
             id="name"
             placeholder="Digite o nome do personagem"
-            className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-accent-light rounded-lg bg-primary focus:outline-none focus:ring-2 focus:ring-accent"
             {...register("name", { required: "O nome do personagem é obrigatório." })}
           />
-          {errors.name && <span className="text-red-500">{errors.name.message}</span>}
+          {errors.name && <span className="text-accent-lightHover">{errors.name.message}</span>}
         </div>
 
         {/* Upload da imagem */}
         <div>
-          <label htmlFor="image" className="block text-sm font-medium mb-2">
+          <label htmlFor="image" className="block text-sm font-medium mb-2 text-secondary">
             Imagem do Personagem
           </label>
           <input
             type="file"
             id="image"
             accept="image/*"
-            className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-accent-light rounded-lg bg-primary focus:outline-none focus:ring-2 focus:ring-accent"
             onChange={handleImageUpload}
           />
-          {errors.image && <span className="text-red-500">Imagem é obrigatória.</span>}
+          {errors.image && <span className="text-accent-lightHover">Imagem é obrigatória.</span>}
         </div>
 
         {/* Preview da imagem */}
         {imagePreview && (
           <div className="mt-4">
-            <p className="text-sm mb-2">Preview:</p>
+            <p className="text-sm mb-2 text-secondary">Preview:</p>
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-full max-w-xs mx-auto rounded-lg border border-gray-600"
+              className="w-full max-w-xs mx-auto rounded-lg border border-accent-light"
             />
           </div>
         )}
 
         {/* Tipo de Personagem */}
         <div>
-          <label htmlFor="type" className="block text-sm font-medium mb-2">
+          <label htmlFor="type" className="block text-sm font-medium mb-2 text-secondary">
             Tipo de Personagem
           </label>
           <select
             id="type"
-            className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-accent-light rounded-lg bg-primary focus:outline-none focus:ring-2 focus:ring-accent"
             defaultValue={'DEFAULT'}
             {...register("type", { required: true })}
           >
@@ -188,23 +188,23 @@ const CreateCharacter = () => {
             <option value="assassino">Assassino</option>
             <option value="miseravel">Miserável</option>
           </select>
-          {errors.type && <span className="text-red-500">Tipo é obrigatório.</span>}
+          {errors.type && <span className="text-accent-lightHover">Tipo é obrigatório.</span>}
         </div>
 
         {/* Atributos */}
         <div>
-          <h2 className="text-lg font-bold mb-4">Atributos</h2>
+          <h2 className="text-lg font-bold mb-4 text-secondary">Atributos</h2>
           <div className="grid grid-cols-2 gap-4">
             {attributeFields.map(({ id, label }) => (
               <div key={id}>
-                <label htmlFor={id} className="block text-sm font-medium mb-2">
+                <label htmlFor={id} className="block text-sm font-medium mb-2 text-secondary">
                   {label}
                 </label>
                 <input
                   type="number"
                   id={id}
                   placeholder="0"
-                  className="w-full p-3 border border-gray-600 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-accent-light rounded-lg bg-primary focus:outline-none focus:ring-2 focus:ring-accent"
                   defaultValue={0}
                   min={0}
                   {...register(`attributes.${id}`, {
@@ -218,13 +218,14 @@ const CreateCharacter = () => {
 
         <button
           type="submit"
-          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg ${isLoading && "opacity-50 cursor-not-allowed"}`}
+          className={`w-full bg-accent hover:bg-accent-hover text-primaryDark font-bold py-3 rounded-lg ${isLoading && "opacity-50 cursor-not-allowed"}`}
           disabled={isLoading}
         >
           {isLoading ? "Salvando..." : "Criar Personagem"}
         </button>
       </form>
     </div>
+
   );
 };
 
